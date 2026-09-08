@@ -12,7 +12,9 @@ target/
 build/
 .gradle/
 gradle-app.setting
-!gradle-wrapper.jar
+
+# Исключение: gradle-wrapper.jar должен храниться в Git
+!gradle/wrapper/gradle-wrapper.jar
 
 # OS
 .DS_Store
@@ -22,16 +24,14 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
-*~
-.idea/
-*.iml
 
 # Test
-*.log
 test-output/
 
 # Gradle
 gradle/
+!gradle/wrapper/
+gradle/wrapper/*
 !gradle/wrapper/gradle-wrapper.jar
 
 # Mac
