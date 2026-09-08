@@ -1,0 +1,45 @@
+# Java
+*.class
+*.war
+*.ear
+*.log
+*.iml
+.idea/
+*.iws
+*.ipr
+out/
+target/
+build/
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+
+# Test
+*.log
+test-output/
+
+# Gradle
+gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
