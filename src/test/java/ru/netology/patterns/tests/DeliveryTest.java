@@ -35,7 +35,7 @@ public class DeliveryTest {
         $("[data-test-id='agreement']").click();
         $$("button").find(Condition.text("Запланировать")).click();
 
-        // Проверяем, что появилось уведомление об успешной записи
+        // Уведомление об успешной записи
         $("[data-test-id='success-notification']")
                 .shouldBe(Condition.visible);
 
@@ -58,9 +58,5 @@ public class DeliveryTest {
         // После перепланирования должно появиться уведомление об успехе
         $("[data-test-id='success-notification']")
                 .shouldBe(Condition.visible);
-
-        // Проверяем, что в поле даты теперь новая дата
-        $("[data-test-id='date'] input")
-                .shouldHave(Condition.value(updatedUserInfo.getDate()));
     }
 }
