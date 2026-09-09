@@ -1,9 +1,9 @@
 package ru.netology.patterns.tests;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
 import ru.netology.patterns.data.UserInfo;
 import ru.netology.patterns.generator.DataGenerator;
 
@@ -15,12 +15,6 @@ public class DeliveryTest {
 
     @BeforeEach
     void setUp() {
-        Configuration.browser = System.getProperty("selenide.browser", "chrome");
-        Configuration.headless = Boolean.parseBoolean(System.getProperty("selenide.headless", "false"));
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 15000;
-        Configuration.holdBrowserOpen = false;
-
         userInfo = DataGenerator.generateUserInfo();
         open("http://localhost:9999");
     }
@@ -35,9 +29,10 @@ public class DeliveryTest {
         $("[data-test-id='agreement']").click();
         $$("button").find(Condition.text("Запланировать")).click();
 
-        // Уведомление об успешной записи
-        $("[data-test-id='success-notification']")
-                .shouldBe(Condition.visible);
+        // Проверяем текст сообщения об успешном планировании с датой
+        $("[data-test-id='success-notification'] .notification__content")
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text(userInfo.getDate()));
 
         // Генерируем новую дату
         UserInfo updatedUserInfo = DataGenerator.updateDate(userInfo, 5);
@@ -45,8 +40,8 @@ public class DeliveryTest {
         // Закрываем уведомление
         $("[data-test-id='success-notification'] .icon-button").click();
 
-        // Очищаем поле даты и вводим новую
-        $("[data-test-id='date'] input").setValue("");
+        // Очищаем поле даты с помощью Ctrl+A и Backspace
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(updatedUserInfo.getDate());
         $$("button").find(Condition.text("Запланировать")).click();
 
@@ -55,8 +50,9 @@ public class DeliveryTest {
                 .shouldBe(Condition.visible);
         $("[data-test-id='replan-notification'] button").click();
 
-        // После перепланирования должно появиться уведомление об успехе
-        $("[data-test-id='success-notification']")
-                .shouldBe(Condition.visible);
+        // Проверяем текст сообщения об успешном перепланировании с новой датой
+        $("[data-test-id='success-notification'] .notification__content")
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text(updatedUserInfo.getDate()));
     }
 }

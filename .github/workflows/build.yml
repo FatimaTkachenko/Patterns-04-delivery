@@ -21,22 +21,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
-
       - name: Start SUT for Delivery
         run: |
           nohup java -jar artifacts/app-replan-delivery.jar &
-          sleep 30
 
       - name: Run Delivery tests
-        run: ./gradlew test --tests "ru.netology.patterns.tests.DeliveryTest" -Dselenide.headless=true
-
-      - name: Upload Delivery test report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: delivery-test-report
-          path: build/reports/tests/test
+        run: ./gradlew test --info --tests "ru.netology.patterns.tests.DeliveryTest" -Dselenide.headless=true
