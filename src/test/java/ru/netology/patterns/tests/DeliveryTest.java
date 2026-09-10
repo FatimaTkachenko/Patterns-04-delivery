@@ -29,10 +29,9 @@ public class DeliveryTest {
         $("[data-test-id='agreement']").click();
         $$("button").find(Condition.text("Запланировать")).click();
 
-        // Проверяем текст сообщения об успешном планировании с датой
+        // Проверяем полный текст сообщения с датой
         $("[data-test-id='success-notification'] .notification__content")
-                .shouldBe(Condition.visible)
-                .shouldHave(Condition.text(userInfo.getDate()));
+                .shouldHave(Condition.text("Встреча успешно запланирована на " + userInfo.getDate()));
 
         // Генерируем новую дату
         UserInfo updatedUserInfo = DataGenerator.updateDate(userInfo, 5);
@@ -46,13 +45,10 @@ public class DeliveryTest {
         $$("button").find(Condition.text("Запланировать")).click();
 
         // Появляется диалог перепланирования
-        $("[data-test-id='replan-notification']")
-                .shouldBe(Condition.visible);
         $("[data-test-id='replan-notification'] button").click();
 
-        // Проверяем текст сообщения об успешном перепланировании с новой датой
+        // Проверяем полный текст сообщения с новой датой
         $("[data-test-id='success-notification'] .notification__content")
-                .shouldBe(Condition.visible)
-                .shouldHave(Condition.text(updatedUserInfo.getDate()));
+                .shouldHave(Condition.text("Встреча успешно запланирована на " + updatedUserInfo.getDate()));
     }
 }
