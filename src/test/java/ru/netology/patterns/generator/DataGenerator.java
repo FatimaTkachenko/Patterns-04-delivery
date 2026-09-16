@@ -37,14 +37,21 @@ public class DataGenerator {
 
     public static String generateCity() {
         String[] cities = {
-                "Москва", "Санкт-Петербург", "Челябинск", "Ханты-Мансийск",
-                "Калуга", "Уфа", "Якутск", "Псков"
+                "Москва",
+                "Санкт-Петербург",
+                "Челябинск",
+                "Ханты-Мансийск",
+                "Калуга",
+                "Уфа",
+                "Якутск",
+                "Псков"
         };
         return cities[ThreadLocalRandom.current().nextInt(cities.length)];
     }
 
     public static String generateName() {
-        return faker.name().firstName() + " " + faker.name().lastName();
+        String name = faker.name().firstName() + " " + faker.name().lastName();
+        return name.replace("ё", "е").replace("Ё", "Е");
     }
 
     public static String generatePhone() {
